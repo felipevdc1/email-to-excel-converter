@@ -1,0 +1,24 @@
+{
+  "name": "email-to-excel-converter",
+  "version": "1.0.0",
+  "description": "Conversor de emails EML para Excel - Processamento 100% local no navegador",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "deploy-vercel": "vercel",
+    "deploy-netlify": "netlify deploy --prod"
+  },
+  "keywords": [
+    "email",
+    "eml",
+    "excel",
+    "csv",
+    "converter",
+    "zip"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}

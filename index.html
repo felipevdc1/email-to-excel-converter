@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conversor gratuito de emails EML para Excel. Processe arquivos ZIP com emails diretamente no navegador. 100% privado e seguro.">
+    <meta name="keywords" content="eml, email, excel, csv, conversor, zip">
+    <meta name="author" content="Email to Excel Converter">
+    
+    <title>Conversor de Emails (.eml) para Excel - Gratuito e Online</title>
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Conversor de Emails para Excel">
+    <meta property="og:description" content="Converta arquivos .eml para planilha Excel gratuitamente">
+    <meta property="og:type" content="website">
+    
+    <style>
+        /* Reset e configurações básicas */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: clamp(1.8em, 5vw, 2.5em);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* Main content */
+        main {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+        }
+
+        /* Upload Section */
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            padding: 60px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: #fafafa;
+            margin-bottom: 30px;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .upload-area.drag-over {
+            border-color: #667eea;
+            background: #e3f2fd;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            opacity: 0.6;
+        }
+
+        .upload-area h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .upload-area p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            margin: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .info-section h3 {
+            color: #495057;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .info-section ol {
+            padding-left: 20px;
+        }
+
+        .info-section li {
+            margin-bottom: 10px;
+            color: #6c757d;
+            font-size: 1.1em;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        /* Results Section */
+        .stats {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .stat-item {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: #495057;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            color: white;
+        }
+
+        .feature h4 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        /* Hidden elements */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            main {
+                padding: 20px;
+            }
+            
+            .upload-area {
+                padding: 40px 15px;
+            }
+            
+            .upload-icon {
+                font-size: 3em;
+            }
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📧 Conversor de Emails para Excel</h1>
+            <p>Converta arquivos .eml para planilha Excel gratuitamente</p>
+        </header>
+
+        <main>
+            <!-- Upload Section -->
+            <div id="uploadSection">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📁</div>
+                    <h3>Arraste seu arquivo ZIP aqui</h3>
+                    <p>ou clique para selecionar</p>
+                    <input type="file" id="fileInput" accept=".zip" hidden>
+                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                        Selecionar Arquivo ZIP
+                    </button>
+                </div>
+
+                <div class="info-section">
+                    <h3>ℹ️ Como usar:</h3>
+                    <ol>
+                        <li>Selecione um arquivo ZIP contendo emails (.eml)</li>
+                        <li>Aguarde o processamento automático</li>
+                        <li>Baixe o arquivo Excel gerado (.csv)</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div id="progressSection" class="progress-section hidden">
+                <h3>⚙️ Processando seus emails...</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="progressText">Preparando...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="hidden">
+                <div style="text-align: center;">
+                    <h3 style="color: #28a745; margin-bottom: 20px;">✅ Processamento Concluído!</h3>
+                </div>
+                <div class="stats" id="stats"></div>
+                <div style="text-align: center;">
+                    <button class="btn btn-success" id="downloadBtn">
+                        📥 Baixar Planilha Excel
+                    </button>
+                    <button class="btn btn-secondary" onclick="resetApp()">
+                        🔄 Processar Novo Arquivo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="hidden">
+                <div style="text-align: center; padding: 40px;">
+                    <h3 style="color: #dc3545; margin-bottom: 20px;">❌ Erro no Processamento</h3>
+                    <p id="errorMessage" style="background: #f8d7da; color: #721c24; padding: 20px; border-radius: 10px; margin-bottom: 30px;"></p>
+                    <button class="btn btn-secondary" onclick="resetApp()">
+                        🔄 Tentar Novamente
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <div class="features">
+            <div class="feature">
+                <h4>🔒 100% Privado</h4>
+                <p>Processamento local<br>Seus dados não saem do navegador</p>
+            </div>
+            <div class="feature">
+                <h4>🚀 Rápido e Gratuito</h4>
+                <p>Sem limites de uso<br>Funciona em qualquer navegador</p>
+            </div>
+            <div class="feature">
+                <h4>📊 Completo</h4>
+                <p>Extrai todas as informações<br>Exporta para Excel</p>
+            </div>
+        </div>
+
+        <footer style="text-align: center; color: white; padding: 20px;">
+            <p>💡 Compatível com Chrome, Firefox, Safari e Edge</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Processamento 100% local - Nenhum dado é enviado para servidores</p>
+        </footer>
+    </div>
+
+    <!-- JSZip Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    
+    <!-- Email Processor -->
+    <script>
+        class EmailProcessor {
+            constructor() {
+                this.emails = [];
+                this.stats = {
+                    processed: 0,
+                    errors: 0,
+                    attachments: 0
+                };
+            }
+
+            async processFile(file) {
+                try {
+                    if (!file.name.toLowerCase().endsWith('.zip')) {
+                        throw new Error('Por favor, selecione um arquivo ZIP.');
+                    }
+
+                    this.updateProgress(10, 'Lendo arquivo ZIP...');
+                    
+                    const zip = await JSZip.loadAsync(file);
+                    const emlFiles = [];
+                    
+                    zip.forEach((relativePath, file) => {
+                        if (relativePath.toLowerCase().endsWith('.eml') && !file.dir) {
+                            emlFiles.push({path: relativePath, file: file});
+                        }
+                    });
+
+                    if (emlFiles.length === 0) {
+                        throw new Error('Nenhum arquivo .eml encontrado no ZIP.');
+                    }
+
+                    this.updateProgress(20, `Encontrados ${emlFiles.length} emails. Processando...`);
+
+                    for (let i = 0; i < emlFiles.length; i++) {
+                        const progress = 20 + (i / emlFiles.length) * 60;
+                        this.updateProgress(progress, `Processando email ${i + 1}/${emlFiles.length}...`);
+                        
+                        try {
+                            const content = await emlFiles[i].file.async('text');
+                            const emailData = this.parseEmail(content, emlFiles[i].path);
+                            if (emailData) {
+                                this.emails.push(emailData);
+                                this.stats.processed++;
+                                this.stats.attachments += emailData.num_anexos || 0;
+                            }
+                        } catch (error) {
+                            console.warn(`Erro ao processar ${emlFiles[i].path}:`, error);
+                            this.stats.errors++;
+                        }
+                    }
+
+                    this.updateProgress(90, 'Gerando arquivo CSV...');
+                    const csvContent = this.generateCSV();
+                    
+                    this.updateProgress(100, 'Processamento concluído!');
+                    
+                    return {
+                        csvContent: csvContent,
+                        filename: file.name.replace('.zip', '_emails.csv'),
+                        stats: this.stats
+                    };
+
+                } catch (error) {
+                    console.error('Erro no processamento:', error);
+                    throw error;
+                }
+            }
+
+            parseEmail(content, filename) {
+                try {
+                    const lines = content.split('\n');
+                    const headers = {};
+                    let bodyStart = 0;
+                    let inHeaders = true;
+                    
+                    for (let i = 0; i < lines.length; i++) {
+                        const line = lines[i];
+                        
+                        if (inHeaders) {
+                            if (line.trim() === '') {
+                                bodyStart = i + 1;
+                                inHeaders = false;
+                                break;
+                            }
+                            
+                            const headerMatch = line.match(/^([^:]+):\s*(.*)$/);
+                            if (headerMatch) {
+                                const field = headerMatch[1].toLowerCase().trim();
+                                const value = headerMatch[2].trim();
+                                headers[field] = value;
+                            }
+                            else if (line.match(/^\s+/) && Object.keys(headers).length > 0) {
+                                const lastHeader = Object.keys(headers).pop();
+                                headers[lastHeader] += ' ' + line.trim();
+                            }
+                        }
+                    }
+
+                    const bodyLines = lines.slice(bodyStart);
+                    let body = bodyLines.join('\n');
+                    
+                    if (headers['content-type'] && headers['content-type'].includes('multipart')) {
+                        body = this.extractTextFromMultipart(body);
+                    }
+
+                    body = this.cleanText(body).substring(0, 5000);
+
+                    return {
+                        arquivo: filename.split('/').pop(),
+                        remetente: this.cleanText(headers['from'] || ''),
+                        destinatario: this.cleanText(headers['to'] || ''),
+                        cc: this.cleanText(headers['cc'] || ''),
+                        bcc: this.cleanText(headers['bcc'] || ''),
+                        assunto: this.cleanText(headers['subject'] || ''),
+                        data: this.parseDate(headers['date'] || ''),
+                        message_id: this.cleanText(headers['message-id'] || ''),
+                        in_reply_to: this.cleanText(headers['in-reply-to'] || ''),
+                        corpo: body,
+                        num_anexos: this.countAttachments(content),
+                        anexos: this.getAttachmentNames(content)
+                    };
+
+                } catch (error) {
+                    console.warn(`Erro ao parsear email ${filename}:`, error);
+                    return null;
+                }
+            }
+
+            extractTextFromMultipart(content) {
+                const textParts = [];
+                const lines = content.split('\n');
+                let inTextPart = false;
+                let currentText = '';
+                
+                for (const line of lines) {
+                    if (line.toLowerCase().includes('content-type: text/plain')) {
+                        inTextPart = true;
+                        currentText = '';
+                        continue;
+                    }
+                    
+                    if (inTextPart && (line.startsWith('--') || line.toLowerCase().includes('content-type:'))) {
+                        if (currentText.trim()) {
+                            textParts.push(currentText.trim());
+                        }
+                        inTextPart = false;
+                        continue;
+                    }
+                    
+                    if (inTextPart && line.trim() === '') {
+                        continue;
+                    }
+                    
+                    if (inTextPart) {
+                        currentText += line + '\n';
+                    }
+                }
+                
+                if (textParts.length === 0) {
+                    const htmlRemoved = content.replace(/<[^>]*>/g, '');
+                    return htmlRemoved.substring(0, 2000);
+                }
+                
+                return textParts.join('\n');
+            }
+
+            countAttachments(content) {
+                const attachmentMatches = content.match(/Content-Disposition:\s*attachment/gi);
+                return attachmentMatches ? attachmentMatches.length : 0;
+            }
+
+            getAttachmentNames(content) {
+                const names = [];
+                const lines = content.split('\n');
+                
+                for (const line of lines) {
+                    if (line.toLowerCase().includes('content-disposition:') && 
+                        line.toLowerCase().includes('attachment')) {
+                        const nameMatch = line.match(/filename[*]?=["']?([^"';]+)["']?/i);
+                        if (nameMatch) {
+                            names.push(nameMatch[1]);
+                        }
+                    }
+                }
+                
+                return names.join('; ');
+            }
+
+            cleanText(text) {
+                if (!text) return '';
+                text = text.replace(/\s+/g, ' ');
+                text = text.replace(/[\x00-\x1F\x7F]/g, '');
+                text = text.replace(/"/g, '""');
+                return text.trim();
+            }
+
+            parseDate(dateString) {
+                if (!dateString) return '';
+                
+                try {
+                    const date = new Date(dateString);
+                    if (isNaN(date.getTime())) return dateString;
+                    
+                    return date.toLocaleString('pt-BR', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+                } catch (error) {
+                    return dateString;
+                }
+            }
+
+            generateCSV() {
+                const headers = [
+                    'arquivo', 'remetente', 'destinatario', 'cc', 'bcc',
+                    'assunto', 'data', 'message_id', 'in_reply_to',
+                    'corpo', 'num_anexos', 'anexos'
+                ];
+
+                // Add BOM for Excel UTF-8 recognition
+                let csv = '\ufeff';
+                csv += headers.map(h => `"${h}"`).join(',') + '\n';
+
+                for (const email of this.emails) {
+                    const row = headers.map(field => {
+                        const value = email[field] || '';
+                        return `"${value}"`;
+                    }).join(',');
+                    csv += row + '\n';
+                }
+
+                return csv;
+            }
+
+            updateProgress(percentage, text) {
+                document.getElementById('progressFill').style.width = percentage + '%';
+                document.getElementById('progressText').textContent = text;
+            }
+        }
+
+        // Global functions
+        function resetApp() {
+            document.getElementById('uploadSection').classList.remove('hidden');
+            document.getElementById('progressSection').classList.add('hidden');
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('errorSection').classList.add('hidden');
+            document.getElementById('fileInput').value = '';
+        }
+
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('progressSection').classList.add('hidden');
+            document.getElementById('errorSection').classList.remove('hidden');
+        }
+
+        function showResults(stats, csvContent, filename) {
+            document.getElementById('stats').innerHTML = `
+                <div class="stat-item">
+                    <strong>📧 Emails processados:</strong> ${stats.processed}
+                </div>
+                <div class="stat-item">
+                    <strong>⚠️ Emails com erro:</strong> ${stats.errors}
+                </div>
+                <div class="stat-item">
+                    <strong>📎 Total de anexos encontrados:</strong> ${stats.attachments}
+                </div>
+            `;
+            
+            document.getElementById('downloadBtn').onclick = () => {
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+            
+            document.getElementById('progressSection').classList.add('hidden');
+            document.getElementById('resultsSection').classList.remove('hidden');
+        }
+
+        async function handleFile(file) {
+            try {
+                document.getElementById('uploadSection').classList.add('hidden');
+                document.getElementById('progressSection').classList.remove('hidden');
+                
+                const processor = new EmailProcessor();
+                const result = await processor.processFile(file);
+                
+                showResults(result.stats, result.csvContent, result.filename);
+                
+            } catch (error) {
+                showError(error.message || 'Erro desconhecido no processamento.');
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('drag-over');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFile(e.target.files[0]);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
